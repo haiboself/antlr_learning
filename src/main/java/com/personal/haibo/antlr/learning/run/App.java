@@ -27,7 +27,6 @@ public class App {
 
         // 3. 诊断能力
         sql = "SELECT * FROM X.Y WHERE X IN ('A' 'B')";
-        diagnose(sql);
     }
 
     private static List<String> extractTbs(ParserRuleContext tree){
