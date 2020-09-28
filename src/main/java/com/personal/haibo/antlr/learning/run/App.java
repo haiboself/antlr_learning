@@ -27,6 +27,7 @@ public class App {
 
         // 3. 诊断能力
         sql = "SELECT * FROM X.Y WHERE X IN ('A' 'B')";
+        diagnose(sql);
     }
 
     private static List<String> extractTbs(ParserRuleContext tree){
@@ -43,7 +44,21 @@ public class App {
         return tbs;
     }
 
+    private static void diagnose(String sql){
+        ParserRuleContext tree = parse(sql);
 
+        new SqlBaseBaseVisitor<Object>(){
+            @Override public Object visitStringLiteral(SqlBaseParser.StringLiteralContext ctx) {
+                int count = ctx.getChildCount();
+                if(count > 1){
+                    String msg = "发现字符串常量合并情况,常量值:" + ctx.getText();
+                    throw new RuntimeException(msg);
+                }
+
+                return visitChildren(ctx);
+            }
+        }.visit(tree);
+    }
 
     private static SqlBaseParser getParser(String sql) {
         CharStream cs = CharStreams.fromString(sql);
