@@ -23,7 +23,7 @@ public class App {
 
         // 2. 精简树
         AstNode myTree = (AstNode) new AstBuilder(sql).visit(tree);
-        System.out.println(myTree.toString());
+        System.out.println(myTree);
 
         // 3. 诊断能力
         sql = "SELECT * FROM X.Y WHERE X IN ('A' 'B')";

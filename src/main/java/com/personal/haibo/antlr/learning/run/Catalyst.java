@@ -8,10 +8,10 @@ import org.apache.spark.sql.internal.SQLConf;
 
 public class Catalyst {
     public static void main(String[] args) {
-        String sql = "select * from a.b";
+        String sql = "SELECT * FROM TEST.Y WHERE X IN ('A' 'B')";
         CatalystSqlParser parser = new CatalystSqlParser(new SQLConf());
         ParserRuleContext tree = parser.parse(sql, SqlBaseParser::singleStatement);
         LogicalPlan logicalPlan = (LogicalPlan) parser.astBuilder().visit(tree);
-        System.out.println(logicalPlan);
+        System.out.println(logicalPlan.toString());
     }
 }
